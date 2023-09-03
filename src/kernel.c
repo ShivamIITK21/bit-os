@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "idt/idt.h"
 
 uint16_t *video_mem = (uint16_t *)(0xB8000);
 int row = 0;
@@ -46,8 +47,11 @@ void print(const char* str){
     }
 }
 
+
 void kernel_main(){
     init_terminal();
-    print("Hello\n, World!");
-    print("Wassup");
+    print("Hello, World!\n");
+    print("Wassup\n");
+    print("WOT\n");
+    idt_init();
 }

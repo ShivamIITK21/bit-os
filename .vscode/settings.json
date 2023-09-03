@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "random": "cpp",
+        "memory.h": "c",
+        "config.h": "c",
+        "kernel.h": "c",
+        "idt.h": "c",
+        "forward_list": "c"
     }
 }
