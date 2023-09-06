@@ -15,6 +15,8 @@ struct idtr_desc{
     uint32_t base;          // base addr of desc table
 } __attribute__((packed));
 
+extern void enable_interrupts();
+extern void no_interrupt();
 void idt_init();
 
 #endif

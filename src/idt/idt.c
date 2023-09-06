@@ -2,13 +2,28 @@
 #include "../config.h"
 #include "../memory/memory.h"
 #include "../kernel.h"
+#include "../io/io.h"
+
+
+extern void int0();
+extern void int21h();
+extern void load_idt(void *ptr);
 
 struct idt_desc idt_descriptors[MAX_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
+void no_interrupt_handler(){
+    outb(0x20, 0x20);
+}
 
-void idt_zero(){
+void int21h_handler(){
+    print("Key Pressed\n");
+    outb(0x20, 0x20);
+}
+
+void int0_handler(){
     print("Divide by Zero Error!\n");
+    outb(0x20, 0x20);
 }
 
 void idt_set(int interrupt_no, void* address)
@@ -27,8 +42,12 @@ void idt_init(){
     idtr_descriptor.limit = sizeof(idt_descriptors)-1;
     idtr_descriptor.base = (uint32_t)idt_descriptors;
 
-    idt_set(0, idt_zero);
+    for(int i = 0; i < MAX_INTERRUPTS; i++) idt_set(i, no_interrupt);
 
-     __asm__ ("lidt %0" :: "m"(idtr_descriptor));
+    idt_set(0, int0);
+    idt_set(0x21, int21h);
+
+    load_idt(&idtr_descriptor);
+
 }
 
