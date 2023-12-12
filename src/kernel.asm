@@ -11,7 +11,7 @@ _start:
     mov fs, ax
     mov gs, ax
     mov ss, ax
-    mov ebp, 0x00200000
+    mov ebp, stack_end      ;set stack ptr
     mov esp, ebp
 
     ; Enable the A20 line
@@ -33,4 +33,9 @@ _start:
     call kernel_main
     jmp $
 
-times 512-($ - $$) db 0
+stack_begin:
+    resb 4096   ;reserve stack space
+
+stack_end:
+
+times 5120-($ - $$) db 0
