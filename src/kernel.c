@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/kheap.h"
 
 uint16_t *video_mem = (uint16_t *)(0xB8000);
 int row = 0;
@@ -49,10 +50,35 @@ void print(const char* str){
 }
 
 
+void print_numbers(uint32_t num){
+    int digits[10] = {0};
+    int pos = 10;
+    while(pos--){
+        digits[pos] = num%10;
+        num /= 10;
+    }
+    for(int i = 0; i < 10; i++){
+        print_char(digits[i] + '0', 15);
+    }
+    print_char('\n', 15);
+}
 
 void kernel_main(){
     init_terminal();
     print("Hello, World!\n");
     idt_init();
     enable_interrupts();
+    kernel_heap_init();
+    print_numbers((uint32_t)sizeof(MemChunk));
+    void* head = getHead();
+    void* ptr1 = kmalloc(5);
+    void* ptr2 = kmalloc(6);
+    print_numbers((uint32_t)head);
+    print_numbers((uint32_t)ptr1);
+    print_numbers((uint32_t)ptr2);
+    print("\n");
+    kfree(ptr1);
+    void* ptr3 = kmalloc(4);
+    print_numbers((uint32_t)ptr3);
+    // print_numbers(69);
 }

@@ -1,11 +1,11 @@
-#include<heap.h>
+#include "heap.h"
 
-void heap_init(MemChunk* head, void* start, uint32_t size){
-    head = (MemChunk*)start;
-    head->alloc = 0;
-    head->next = 0;
-    head->prev = 0;
-    head->size = size - (uint32_t)sizeof(MemChunk);
+void heap_init(MemChunk** head, void* start, uint32_t size){
+    *head = (MemChunk*)start;
+    (*head)->alloc = 0;
+    (*head)->next = 0;
+    (*head)->prev = 0;
+    (*head)->size = size - (uint32_t)sizeof(MemChunk);
 }
 
 void* heap_malloc(MemChunk* head, uint32_t size){
