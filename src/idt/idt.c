@@ -30,16 +30,16 @@ void int20h_handler(){
 }
 
 void int21h_handler(){
+    print("????");
     unsigned char c = read_scan_code();
     scan_code_to_action(c);
-    insb(KEYBOARD_COMMAND_PORT);
     outb(0x20, 0x20);
 }
 
 void int2Ch_handler(){
     print("mouse moved\n");
-    insb(MOUSE_COMMAND_PORT);
-    insb(MOUSE_DATA_PORT);
+    // insb(MOUSE_COMMAND_PORT);
+    // insb(MOUSE_DATA_PORT);
     outb(0x20, 0x20);
 }
 

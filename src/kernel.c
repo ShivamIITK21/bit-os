@@ -4,6 +4,7 @@
 #include "memory/kheap.h"
 #include "io/mouse.h"
 #include "idt/pic.h"
+#include "io/keyboard.h"
 
 uint16_t *video_mem = (uint16_t *)(0xB8000);
 int row = 0;
@@ -94,6 +95,7 @@ void kernel_main(){
     init_terminal();
     print("Hello, World!\n");
     InitialiseMouse();
+    keyboard_init();
     idt_init();
     enable_interrupts();
     kernel_heap_init();

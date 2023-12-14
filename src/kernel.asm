@@ -36,6 +36,7 @@ pic_remap:
 
 
     call kernel_main
+
     jmp $
 
 stack_begin:

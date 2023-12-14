@@ -1,5 +1,24 @@
 #include "keyboard.h"
 
+void keyboard_init(){
+    // while(commandport.Read() & 0x1)
+    //     dataport.Read();
+    // commandport.Write(0xae); // activate interrupts
+    // commandport.Write(0x20); // command 0x20 = read controller command byte
+    // uint8_t status = (dataport.Read() | 1) & ~0x10;
+    // commandport.Write(0x60); // command 0x60 = set controller command byte
+    // dataport.Write(status);
+    // dataport.Write(0xf4);
+
+    // while(insb(KEYBOARD_COMMAND_PORT) & 0x1) insb(KEYBOARD_DATA_PORT);
+    outb(KEYBOARD_COMMAND_PORT, 0xAE);
+    // outb(KEYBOARD_COMMAND_PORT, 0x20);
+    // uint8_t status = (insb(KEYBOARD_DATA_PORT) | 1) & ~0x01;
+    // outb(KEYBOARD_COMMAND_PORT, 0x60);
+    // outb(KEYBOARD_DATA_PORT, status);
+    // outb(KEYBOARD_DATA_PORT, 0xf4);
+}
+
 uint8_t read_scan_code(){
     return insb(KEYBOARD_DATA_PORT);
 }

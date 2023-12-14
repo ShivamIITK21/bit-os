@@ -9,5 +9,6 @@
 
 uint8_t read_scan_code();
 void scan_code_to_action(uint8_t key);
+void keyboard_init();
 
 #endif
