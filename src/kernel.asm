@@ -1,6 +1,7 @@
 [BITS 32]
 global _start
 extern kernel_main
+extern PIC_remap
 CODE_SEG equ 0x08
 DATA_SEG equ 0x10
 
@@ -20,14 +21,18 @@ _start:
     out 0x92, al
     
     ; Remap the master PIC
-    mov al, 00010001b
-    out 0x20, al
+    ; mov al, 00010001b
+    ; out 0x20, al
 
-    mov al, 0x20 
-    out 0x21, al
+    ; mov al, 0x20 
+    ; out 0x21, al
 
-    mov al, 00000001b
-    out 0x21, al
+    ; mov al, 00000001b
+    ; out 0x21, al
+pic_remap:
+    push 0x28
+    push 0x20
+    call PIC_remap
 
 
     call kernel_main

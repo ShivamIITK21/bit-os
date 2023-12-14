@@ -4,16 +4,23 @@
 #include "../kernel.h"
 #include "../io/io.h"
 #include "../io/keyboard.h"
+#include "../io/mouse.h"
 
 extern void int0();
 extern void int20h();
 extern void int21h();
+extern void int2Ch();
 extern void load_idt(void *ptr);
 
 struct idt_desc idt_descriptors[MAX_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
 void no_interrupt_handler(){
+    outb(0x20, 0x20);
+}
+
+void int0_handler(){
+    print("Divide by Zero Error!\n");
     outb(0x20, 0x20);
 }
 
@@ -25,11 +32,14 @@ void int20h_handler(){
 void int21h_handler(){
     unsigned char c = read_scan_code();
     scan_code_to_action(c);
+    insb(KEYBOARD_COMMAND_PORT);
     outb(0x20, 0x20);
 }
 
-void int0_handler(){
-    print("Divide by Zero Error!\n");
+void int2Ch_handler(){
+    print("mouse moved\n");
+    insb(MOUSE_COMMAND_PORT);
+    insb(MOUSE_DATA_PORT);
     outb(0x20, 0x20);
 }
 
@@ -53,6 +63,7 @@ void idt_init(){
 
     idt_set(0, int0);
     idt_set(0x21, int21h);
+    idt_set(0x2C, int2Ch);
     // idt_set(0x20, int20h);
 
     load_idt(&idtr_descriptor);
