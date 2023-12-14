@@ -63,22 +63,57 @@ void print_numbers(uint32_t num){
     print_char('\n', 15);
 }
 
+void print_numbers_using_heap(uint32_t num){
+    if(num == 0){
+        print("0\n");
+        return;
+    }
+
+    uint32_t cpy = num;
+    uint32_t len = 0;
+    while(cpy != 0) {
+        len++;
+        cpy /= 10;
+    }
+    uint32_t *arr = (uint32_t*)kmalloc(len*sizeof(uint32_t));
+    int pos = len;
+    while(pos--){
+        arr[pos] = num%10;
+        num /= 10;
+    }
+    for(int i = 0; i < len; i++){
+        print_char(arr[i] + '0', 15);
+    }
+    print_char('\n', 15);
+    // kfree(arr);
+}
+
 void kernel_main(){
     init_terminal();
     print("Hello, World!\n");
     idt_init();
     enable_interrupts();
     kernel_heap_init();
-    print_numbers((uint32_t)sizeof(MemChunk));
-    void* head = getHead();
+
+    // print_numbers_using_heap(1);
+
+    print_numbers_using_heap((uint32_t)sizeof(MemChunk));
+    // void* head = getHead();
     void* ptr1 = kmalloc(5);
     void* ptr2 = kmalloc(6);
-    print_numbers((uint32_t)head);
-    print_numbers((uint32_t)ptr1);
-    print_numbers((uint32_t)ptr2);
+    // print_numbers_using_heap((uint32_t)head);
+    print_numbers_using_heap((uint32_t)ptr1);
+    print_numbers_using_heap((uint32_t)ptr2);
     print("\n");
     kfree(ptr1);
     void* ptr3 = kmalloc(4);
-    print_numbers((uint32_t)ptr3);
+    print_numbers_using_heap((uint32_t)ptr3);
+    print("\n");
+    kfree(ptr1);
+    kfree(ptr2);
+    kfree(ptr3);
+    void* ptr4 = kmalloc(6);
+    print_numbers_using_heap((uint32_t)ptr4);
+    
     // print_numbers(69);
 }
