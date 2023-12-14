@@ -3,9 +3,10 @@
 #include "../memory/memory.h"
 #include "../kernel.h"
 #include "../io/io.h"
-
+#include "../io/keyboard.h"
 
 extern void int0();
+extern void int20h();
 extern void int21h();
 extern void load_idt(void *ptr);
 
@@ -16,8 +17,14 @@ void no_interrupt_handler(){
     outb(0x20, 0x20);
 }
 
+void int20h_handler(){
+    print("tick\n");
+    outb(0x20, 0x20);
+}
+
 void int21h_handler(){
-    print("Key Pressed\n");
+    unsigned char c = read_scan_code();
+    scan_code_to_action(c);
     outb(0x20, 0x20);
 }
 
@@ -46,6 +53,7 @@ void idt_init(){
 
     idt_set(0, int0);
     idt_set(0x21, int21h);
+    // idt_set(0x20, int20h);
 
     load_idt(&idtr_descriptor);
 

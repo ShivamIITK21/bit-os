@@ -6,5 +6,5 @@
 #define VGA_WIDTH 80
 
 void print(const char* str);
-
+void print_char(char c, char color);
 #endif

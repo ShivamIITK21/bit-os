@@ -49,7 +49,7 @@ void print(const char* str){
     }
 }
 
-
+//can print upto 10 digits
 void print_numbers(uint32_t num){
     int digits[10] = {0};
     int pos = 10;
