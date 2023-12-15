@@ -95,6 +95,7 @@ void kernel_main(){
     init_terminal();
     print("Entered kernel successfully!\n");
     keyboard_init();
+    // InitialiseMouse();
     idt_init();
     enable_interrupts();
     kernel_heap_init();

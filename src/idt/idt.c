@@ -38,8 +38,21 @@ void int21h_handler(){
 //not impl
 void int2Ch_handler(){
     print("mouse moved\n");
-    // insb(MOUSE_COMMAND_PORT);
-    // insb(MOUSE_DATA_PORT);
+
+    // Read the status
+    uint8_t status = insb(MOUSE_COMMAND_PORT);
+
+    // Check if data is available
+    if (status & 0x1) {
+        // Read the data
+        insb(MOUSE_DATA_PORT);
+
+        // TODO: Process the data
+        print("Mouse data: ");
+        print("\n");
+    }
+
+    // Send end of interrupt signal
     outb(0x20, 0x20);
 }
 
