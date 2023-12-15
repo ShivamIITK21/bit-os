@@ -12,6 +12,7 @@ void keyboard_init(){
 
     // while(insb(KEYBOARD_COMMAND_PORT) & 0x1) insb(KEYBOARD_DATA_PORT);
     outb(KEYBOARD_COMMAND_PORT, 0xAE);
+    // outb(KEYBOARD_COMMAND_PORT, 0xAD);
     // outb(KEYBOARD_COMMAND_PORT, 0x20);
     // uint8_t status = (insb(KEYBOARD_DATA_PORT) | 1) & ~0x01;
     // outb(KEYBOARD_COMMAND_PORT, 0x60);

@@ -93,11 +93,9 @@ void print_numbers_using_heap(uint32_t num){
 
 void kernel_main(){
     init_terminal();
-    print("Hello, World!\n");
-    InitialiseMouse();
+    print("Entered kernel successfully!\n");
     keyboard_init();
     idt_init();
     enable_interrupts();
     kernel_heap_init();
-    print("Back to kernel\n");
 }

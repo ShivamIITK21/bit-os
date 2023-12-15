@@ -33,7 +33,8 @@ pic_remap:
     push 0x28
     push 0x20
     call PIC_remap
-
+    pop eax
+    pop eax
 
     call kernel_main
 

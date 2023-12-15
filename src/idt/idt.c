@@ -30,12 +30,12 @@ void int20h_handler(){
 }
 
 void int21h_handler(){
-    print("????");
     unsigned char c = read_scan_code();
     scan_code_to_action(c);
     outb(0x20, 0x20);
 }
 
+//not impl
 void int2Ch_handler(){
     print("mouse moved\n");
     // insb(MOUSE_COMMAND_PORT);
@@ -63,7 +63,7 @@ void idt_init(){
 
     idt_set(0, int0);
     idt_set(0x21, int21h);
-    idt_set(0x2C, int2Ch);
+    // idt_set(0x2C, int2Ch);
     // idt_set(0x20, int20h);
 
     load_idt(&idtr_descriptor);
