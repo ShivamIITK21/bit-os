@@ -1,4 +1,4 @@
-FILES = ./build/kernel.asm.o  ./build/kernel.o ./build/memory/memory.o ./build/idt/idt.o ./build/idt/idt.asm.o ./build/io/io.asm.o	./build/memory/heap.o ./build/memory/kheap.o ./build/io/keyboard.o ./build/idt/pic.o ./build/io/mouse.o
+FILES = ./build/kernel.asm.o  ./build/kernel.o ./build/memory/memory.o ./build/idt/idt.o ./build/idt/idt.asm.o ./build/io/io.asm.o	./build/memory/heap.o ./build/memory/kheap.o ./build/io/keyboard.o ./build/idt/pic.o ./build/io/mouse.o ./build/memory/paging.o
 INCLUDES = -I./src
 FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 
@@ -47,6 +47,9 @@ all: ./bin/boot.bin ./bin/kernel.bin
 
 ./build/io/mouse.o: ./src/io/mouse.c
 	i686-elf-gcc $(INCLUDES)/io $(FLAGS) -std=gnu99 -c ./src/io/mouse.c -o ./build/io/mouse.o
+
+./build/memory/paging.o: ./src/memory/paging.c
+	i686-elf-gcc $(INCLUDES)/memory $(FLAGS) -std=gnu99 -c ./src/memory/paging.c -o ./build/memory/paging.o
 
 clean:
 	rm -rf ./bin/boot.bin

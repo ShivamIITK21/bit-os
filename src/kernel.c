@@ -5,6 +5,7 @@
 #include "io/mouse.h"
 #include "idt/pic.h"
 #include "io/keyboard.h"
+#include "memory/paging.h"
 
 uint16_t *video_mem = (uint16_t *)(0xB8000);
 int row = 0;
@@ -94,9 +95,12 @@ void print_numbers_using_heap(uint32_t num){
 void kernel_main(){
     init_terminal();
     print("Entered kernel successfully!\n");
+    kernel_heap_init();
     keyboard_init();
     // InitialiseMouse();
+
+    linear_page_diretory(PRESENT | WRITEABLE | ACCESS_FROM_ALL);
+
     idt_init();
     enable_interrupts();
-    kernel_heap_init();
 }
